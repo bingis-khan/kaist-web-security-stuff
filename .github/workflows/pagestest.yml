@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Generate a text file
         run: |
           ls . > docs/test.txt
       - name: Setup Pages
