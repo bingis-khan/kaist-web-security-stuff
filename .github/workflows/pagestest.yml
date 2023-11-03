@@ -31,10 +31,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: Generate a text file
+
+      - name: Make documents
+        uses: xu-cheng/texlive-action@v2
+        with:
+          scheme: small
+          run: |
+            ./static/gen.sh
+
+      - name: Generate website
         run: |
-          ls . > docs/test.txt
+          ./static/addreplace.sh
+      
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
