@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\title{The Cookie Hunter: Automated Black-box Auditing for Web
+Authentication and Authorization Flaws}
+\author{Robert Krzysztof Robert Noparlik}
+
+
+\begin{document}
+
+\maketitle
+
+
+\section{Summary}
+
+The proposed system automatically attempts to create accounts on the most popular sites and tests how secure the cookies they set are. It tries to detect if the site supports account creation. If it does, then it attempts to create an account. The system the evaluates if a cookie is vulnerable, for example, by checking if the headers \textit{httpOnly} or \textit{secure} attributes are set. If a site is found to be vulnerable, they then deploy a different browser instance to automatically check how much data is leaked.
+
+The paper also goes into detail about how their system's automation and fault tolerance works.
+
+Their findings suggest, that ~11k out of 25k domains are vulnerable to eavesdropping attacks and that 23\% are susceptible to cookie hijacking through JavaScript.
+
+\section{Pros}
+
+\begin{itemize}
+	\item The system is robust and supports scanning a large number of websites with features like SSO.
+	\item The system is described in great detail, including alternate execution paths in case of errors.
+\end{itemize}
+
+
+\section{Cons}
+
+\begin{itemize}
+	\item Does not support captchas due to higher amount of work and moral dillemas.
+	\item Its robustness makes the system much more complex, especially for such a seemingly simple task (cookie checking).
+	\item Account creation tool not released as OSS.
+\end{itemize}
+
+\section{Meaning}
+
+One of the most awe-inspiring things about the paper is that the authors tackled the problem of automatic account creation on websites. A simple-looking step required to start analyzing cookies is really hard in practice given the amount of websites on the internet and the prevalence of highly dynamic SSAs, which make scraping harder. 
+
+However, I doubt that the attack which the paper targets is that severe. Sites rarely, if ever, serve HTTP content, thus making the check for \textit{httpOnly} and \textit{secure} not very important in the grand scheme of things. But, if an authentication cookie does not have the \textit{secure} attribute set, it is definitely an oversight and has to be fixed as quickly as possible.
+
+Although not the first study to automatically check for cookie vulnerabilities, the authors improved on the previous method to detect AuthCookies. Once detected, they can be audited and used to check privacy leakage.
+
+
+\section{Discussion and Questions about the paper}
+
+How dangerous are those cookie security issues actually, especially if a lot of modern sites might not serve HTTP content at all?
+
+
+\end{document}
