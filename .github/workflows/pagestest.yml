@@ -31,11 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        run: |
+          ls . > docs/test.txt
       - name: Setup Pages
         uses: actions/configure-pages@v3
-        with:
-          run: |
-            ls . > docs/test.txt
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
