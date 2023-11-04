@@ -41,6 +41,7 @@ jobs:
 
       - name: Generate website
         run: |
+          find docs
           ./static/addreplace.sh
       
       - name: Setup Pages
