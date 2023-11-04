@@ -1,0 +1,62 @@
+\documentclass{article}
+
+\title{"HearMeOut: Detecting Voice Phishing Activities" Summary}
+\author{Robert Krzysztof Robert Noparlik}
+
+
+\begin{document}
+\maketitle
+
+\section{Summary}
+
+The paper covers the topic of voice phishing - a way to impersonate bank and government employees by way of phone calls. To make the victims call the phishing number desired by the scammers, a potential victim first has to download an outside app for their phone. The download link is provided through an SMS a victim gets with an enticing offer, like a way to refinance an existing load with another one with a lower interest rate (provided they install this app, of course).
+Most of the apps do the following three things, which exploit lax permissions of the early Android APIs:
+
+\begin{enumerate}
+	\item They change an outgoing call to a bank or a government organization to the one provided by the scammers.
+	\item They cover the keyboard/"phone" screen with their own overlay based on the make of the victims phone. This is meant to conceal the phone number switch. This keyboard cover is often reactive to the events on the call to further make it appear more legitimate.
+	\item A sound is played by the app stylized as a bank call "jingle" to mask the outgoing number change.
+\end{enumerate}
+
+This attack seems to be fairly effective based on the experiments done by the authors.
+
+In order to combat this scam, the authors of this paper developed an app meant to detect those kinds of malicious apps and warn the user appropriately. Whenever an app attempts to change the outgoing number (and do a few other things that imply its malicious intent), the user is blocked from making a phone call with a screen that explains what had happened and why.
+
+The reported effectiveness of this app is 100\% (the app stopped all of the phishing attempts and there were no false positives) compared to the control group, of which 87\% fell for the scam. 
+
+\section{Pros}
+
+\begin{itemize}
+	\item Very high effectiveness of the app in stopping phishing attacks.
+	\item Well designed warning, which seems invoke appropriate emotions and forces the user to be cautious.
+	\item Low overhead and simple design.
+\end{itemize}
+
+\section{Cons}
+
+\begin{itemize}
+	\item Requires a revised API, which, as I understand it, makes it impossible to install on devices with vanilla Android systems.
+	\item Small sample size of the experiments (both in case of participants and test phishing apps).
+\end{itemize}
+
+\section{Meaning}
+
+This paper is the first paper which deals with phishing scams based on modifying outgoing calls. The app in the paper also seems to be the only one of its kind that is even remotely helpful in these kinds of scams. The alternatives presented in the paper either relied on really naive approaches like checking package names (which are in complete control of the attacker) or were ineffective at best and potentially malicious at worst by sending sensitive user information to a 3rd party website. Especially the package name checking, since those phishing attacks are typically deployed in periods lasting only a few days - which defeats blacklist style approaches. The app detects common patterns that the phishing apps use, making it possible to prevent newly written phishing apps from performing their function. Based on this, the redesigned API used by the app would hopefully make it in some form in a new Android version.
+
+Despite this attack being a legitimate threat, I believe this attack is limited in scope to countries like South Korea. This is because, unlike in Europe, Korean banks force their users to install shady-looking proprietary middleware apps in order to use their services (like V3 Mobile Plus 2.0). This makes the user's phone \textbf{much} more vulnerable by exponentially multiplying its points of failure. I, personally, do not trust these companies to make secure apps, especially if they act as my middleware and have access to all the data that passes through them. Things are even worse, as \textit{this conditions people to install weird, barely functional apps on their phone}. And this seems to be the key issue here and why this attack is so effective.
+
+Note, that this attack does not work on iOS devices as they do not provide such control to their apps, which in turn makes the system much more secure. This seems like a reasonable choice and it's truly bewildering how Google allowed these kinds of tricks to be executed by common applications.
+
+
+\section{Discussion}
+
+\begin{itemize}
+	\item As I mentioned in the \textit{Meaning} section, I believe that the users' gullibility to download unverified apps is caused by the banks' pathological behavior with regards to security. Is there a reason why the situation is like this?
+	\item It should have never been possible for an app to intercept an outgoing phone number.
+	\item Do the benefits of making any sort of overlay possible outweigh the downsides? In my opinion, \textbf{definitely not}, but there should be an option for a PiP mode for apps.
+	\item How realistic it is for Google to either implement the API changes in some form in a future version of Android or at least make the attack impossible (by making it impossible to intercept calls, even breaking backwards compatibility)?
+\end{itemize}
+
+
+
+\end{document}
