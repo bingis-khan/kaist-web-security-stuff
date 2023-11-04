@@ -34,7 +34,7 @@ jobs:
           scheme: small
           run: |
             ./static/gen.sh
-            chmod 555 -R docs
+            chmod 666 -R docs
 
       - name: Generate website
         run: |
