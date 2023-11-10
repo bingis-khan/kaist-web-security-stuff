@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\title{"Identity Confusion in WebView-based Mobile App-in-app Ecosystems" Summary}
+\author{Robert Krzysztof Robert Noparlik}
+
+
+\begin{document}
+\maketitle
+
+\section{Summary}
+
+This paper explores "identity confusion" in App-in-app ecosystems - but what does that even mean?
+When an app achieves enough popularity, their authors may decide to bloat the app even more by adding an "app marketplace". This is used by, for example, Microsoft Teams to achieve things like calendar events, additional "reactions" to messages, organizers, etc. The paper dubs them \textit{sub-apps}, while the app that's hosting these sub-apps is called a \textit{super-app}. These \textit{sub-apps} are, in general, websites "executed" in a WebView instance.
+
+This, of course, introduces even more vulnerabilities to the app, and this is what this paper is about. These vulnerabilities impact such high-profile apps as Teams, TikTok, Snapchat, WeChat, and everyone's favorite, JinRiTouTiao-Mini. The vulnerabilites discovered by the authors are grouped into three main groups:
+
+\begin{itemize}
+	\item Domain Name Confusion
+	\item AppID Confusion
+	\item Capability Confusion
+\end{itemize}
+
+Domain Name Confusion happens, when the super-app based its decision on whether to execute an API method on the sub-app WebView's URL (and this is exploitable). For example, it's possible for a sub-app to trigger a move to a privileged website and then, while the content is being loaded, invoke a privileged API request. This happens, because the URL of the window is changed, but the website is still operable until new content is fetched. AppID confusion is similar, where a sub-app does not hide it's AppID, but the apps/apps' whitelists do not correctly check the URL - a simple vulnerability. Capability confusion is also a simple vulnerability - it just means that some API method is not properly secured, so unauthorized apps can use it. 
+
+The results are astounding - all super-apps are vulnerable. The effects of this are possible \textit{privilege escalation} attacks, \textit{phishing} attacks and \textit{privacy leaks}. Alongside those, WeChat collects every web request and saves it on their server. Before publication, the authors contacted each app developer from the 47 mentioned in the article and worked with them to patch them. 
+
+
+\section{Pros}
+
+\begin{itemize}
+	\item Uses an interesting WebView trick and reminds the reader, that WebView is full of those.
+	\item Study impacts popular apps, which should purportedly be "more secure". 
+\end{itemize}
+
+\section{Cons}
+
+\begin{itemize}
+	\item Two of the three categories are effectively pointless, since they describe two simple and common real world vulnerabilities.
+	\item No mention of open-sourcing the code used to test applications for these vulnerabilities.
+\end{itemize}
+
+\section{Meaning}
+
+The authors show that app-in-app ecosystems have a new set of possible vulnerabilities. It's main contribution area set of timing attacks that impact WebView applications, which allow sub-apps to access resources and do actions only intended for super-apps. This means, that the more privileges and functions a super-app has, the more dangerous this vulnerability is. 
+So it's (not so) surprising, that at least one of these vulnerabilities was found for each app that was examined. All of them seem to be popular, high-profile apps.
+
+Authors claim that this is the first paper of its kind. In reality, there were some other apps which examined the security of app-in-app ecosystems. Also, this is not the first paper to examine WebView vulnerabilities. However, it's the first to combine the two.
+
+
+\section{Discussion}
+
+\begin{itemize}
+	\item How to mitigate that iframe vulnerability?
+\end{itemize}
+
+
+\end{document}
