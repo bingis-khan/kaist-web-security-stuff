@@ -8,3 +8,10 @@ done
 
 rm docs/pdf/*/*.log
 rm docs/pdf/*/*.aux
+
+
+# Also presentation
+cd presentation
+make
+mv pres.pdf ../docs/pdf/presentation.pdf
+cd ..

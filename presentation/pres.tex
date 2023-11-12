@@ -1,0 +1,264 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+
+\AtBeginSection[]{
+	\begin{frame}
+	\vfill
+	\centering
+	\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+		\usebeamerfont{title}\insertsectionhead\par%
+	\end{beamercolorbox}
+	\vfill
+	\end{frame}
+}
+
+
+\title{CokieGraph:
+Understanding and Detecting First-Party Tracking Cookies}
+
+\author{Robert Krzysztof Noparlik}
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+
+\section{What is this about?}
+
+\begin{frame}
+\begin{itemize}
+\item 3rd party cookies are increasingly being blocked in browsers
+\item Advertisers now use 1st party cookies to track users. 
+\item Blocking third party cookies barely makes a difference in the amount of tracking.
+\item CookieGraph - block the offending first party cookies in order to stop tracking.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item Over 90\% of first party tracking cookies blocked - the best of any other solutions.
+\item Large overhead - infeasible to run in an \textit{offline} mode on consumer hardware.
+\end{itemize}
+\end{frame}
+
+
+\section{Motive}
+
+\begin{frame}
+\frametitle{3rd Party Cookie Blocking}
+
+\begin{itemize}
+\item Most browser adopting countermeasures against tracking through 3rd Party Cookies.
+\item A new way of tracking is needed for advertisers.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Use 1st Party Cookies?}
+
+\begin{itemize}
+\item Set an ID.
+\item Exfiltrate this ID in connection with other \textit{PPID} like emails or a browser fingerprint.
+\item Connect user through different sites and devices.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{How can we protect against this tracking?}
+
+\begin{itemize}
+\item Existing solutions don't work as well and are based on things like domain names.
+\item Blocking requests sometimes causes websites to become unusable (eg. AdBlock).
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\centering
+A need for a dedicated solution.
+\end{frame}
+
+
+\section{Backround}
+
+\begin{frame}
+\frametitle{What are 3rd party cookies?}
+
+\begin{itemize}
+
+\item Cookies set on domains that differ from the domain the user is visiting.
+\item Accessible across different sites.
+\item Easy to track users.
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\centering
+What about 1st party cookies?
+\end{frame}
+
+\begin{frame}
+\frametitle{1st Party Cookies for tracking}
+
+\begin{itemize}
+\item Same-site tracking
+\item Cross-domain site tracking
+\item Third-party scripts set ID and share it with other trackers. They connect it with other site provided details like emails and info from other sites.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Countermeasures?}
+
+\begin{itemize}
+\item Safari limits cookie expiration times to 7 days. 
+	\begin{itemize}
+	\item Ineffective, since the ID is shared immediately. 
+	\end{itemize}
+\item Ex. CookieBlock - relies on actual names and not their behavior.
+	\begin{itemize}
+	\item Easy to evade.
+	\end{itemize}
+\item Request blocking - prone to site breakage.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{How 1st Party Cookie tracking happens?}
+
+
+\begin{figure}
+\includegraphics[scale=0.5]{img/crosssite}
+\end{figure}
+
+\begin{enumerate}
+\item User visits a website on the first device. ID is set.
+\item User logs in on that device - a piece of personally identifiable information (PPID - \textit{Publisher-Provided ID}) is connected to that ID.
+\item User logs in to another website. Gets another ID. Uses the same email to log in. Now those two IDs are connected.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{How does 3rd Party Cookie Blocking impact tracking?}
+\centering
+\textit{Not much.}
+
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+\includegraphics[scale=0.5]{img/trackingwhen3rdpcblock}
+\end{figure}
+\end{frame}
+
+
+\section{Introducing CookieGraph}
+
+\begin{frame}
+\frametitle{CookieGraph}
+
+\begin{figure}
+\includegraphics[scale=0.2]{img/diagram}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Design}
+
+\begin{figure}
+\includegraphics[scale=0.2]{img/graphconstruction}
+\end{figure}
+
+\begin{enumerate}
+\item Crawl webpages
+\item Build a graph representation of execution
+\item Label data using other services like filter lists and Cookiepedia.
+\item First-party cookie classification.
+\end{enumerate}
+
+\end{frame}
+
+
+\section{Evaluation}
+
+\begin{frame}
+\frametitle{Feature Analysis}
+
+
+\begin{figure}
+\includegraphics[scale=0.3]{img/featureanalysis}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparison with other technologies}
+
+\begin{figure}
+\includegraphics[scale=0.5]{img/classacc}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Measuring website breakage}
+
+\begin{figure}
+\includegraphics[scale=0.5]{img/breakage}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Prevalence of first-party tracking cookies}
+
+\begin{itemize}
+\item 89.86\% deploy at least one first-party tracking cookie.
+\item Over 90\% are set by embedded third party scripts. 
+\item Google and Facebook on at least one third of the sites.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Limitiations}
+
+\begin{itemize}
+\item If there's not enough "website activity", some cookies are not detectable (eg. Criteo).
+\item Large overhead prevents \textit{CookieGraph} from being run on user machines.
+\end{itemize}
+
+\end{frame}
+
+
+\section{Summary}
+
+\begin{frame}
+\frametitle{Summary}
+
+\begin{itemize}
+\item Blocking third party cookies is ineffective in stopping tracking.
+\item Almost 90\% of sites use tracking, first-party cookies.
+\item \textit{CookieGraph} - detects tracking cookies based on site's behavior.
+\item 90\% accuracy in detecting 1st party cookies, but cannot be run offline.
+\end{itemize}
+
+\end{frame}
+
+\end{document}

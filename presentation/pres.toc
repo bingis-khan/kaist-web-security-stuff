@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{What is this about?}{3}{0}{1}
+\beamer@sectionintoc {2}{Motive}{6}{0}{2}
+\beamer@sectionintoc {3}{Backround}{11}{0}{3}
+\beamer@sectionintoc {4}{Introducing CookieGraph}{19}{0}{4}
+\beamer@sectionintoc {5}{Evaluation}{22}{0}{5}
+\beamer@sectionintoc {6}{Summary}{28}{0}{6}
