@@ -12,6 +12,13 @@
 	\end{frame}
 }
 
+\newcommand{\pic}[1]{
+\begin{figure}
+\vspace{1cm}
+\includegraphics[width=0.3\textwidth]{img/#1}
+\end{figure}
+}
+
 
 \title{CokieGraph:
 Understanding and Detecting First-Party Tracking Cookies}
@@ -39,6 +46,9 @@ Understanding and Detecting First-Party Tracking Cookies}
 \begin{itemize}
 \item 3rd party cookies are increasingly being blocked in browsers
 \item Advertisers now use 1st party cookies to track users. 
+
+\pic{cookie}
+
 \end{itemize}
 \end{frame}
 
@@ -76,6 +86,8 @@ Understanding and Detecting First-Party Tracking Cookies}
 \begin{frame}
 \frametitle{3rd Party Cookie Blocking}
 
+\pic{ie}
+
 \begin{itemize}
 \item Most browsers adopting countermeasures against tracking through 3rd Party Cookies.
 \item A new way of tracking is needed for advertisers.
@@ -107,22 +119,20 @@ Understanding and Detecting First-Party Tracking Cookies}
 \begin{frame}
 \centering
 A need for a dedicated solution.
+
+\pic{solution}
 \end{frame}
 
 
 \section{Backround}
 
 \begin{frame}
-\frametitle{What are 3rd party cookies?}
-
+\frametitle{1st vs 3rd party cookies}
 \begin{itemize}
-
-\item Cookies set on domains that differ from the domain the user is visiting.
-\item Accessible across different sites.
-\item Easy to track users.
-
+\item Cookies can be set either by \textit{Set-Cookie} response header or \textit{document.cookie}.
+\item When \textit{Set-Cookie} is used in a response from the \textit{same} domain as the site, it's a 1st party cookie.
+\item When \textit{document.cookie} not in third party context (not in iframe), it's a 1st party cookie.
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
@@ -139,6 +149,8 @@ What about 1st party cookies?
 \item Cross-domain site tracking
 \item Cross-site tracking
 \end{itemize}
+
+\pic{cookietracking}
 \end{frame}
 
 \begin{frame}
@@ -152,8 +164,8 @@ What about 1st party cookies?
 \begin{frame}
 \frametitle{Cross-domain same-site tracking}
 \begin{itemize}
-\item Tracks the user across multiple subdomains.
-\item Shares cookies with other subdomains.
+\item Shares cookies with other third party trackers, but in the context of a single site.
+\item Is it realistic to expect that that third party won't use identifiers from other sites?
 \end{itemize}
 \end{frame}
 
@@ -166,14 +178,6 @@ What about 1st party cookies?
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{1st vs 3rd party cookies}
-\begin{itemize}
-\item Cookies can be set either by \textit{Set-Cookie} response header or \textit{document.cookie}.
-\item When \textit{Set-Cookie} is used in a response from the \textit{same} domain as the site, it's a 1st party cookie.
-\item When \textit{document.cookie} not in third party context (not in iframe), it's a 1st party cookie.
-\end{itemize}
-\end{frame}
 
 
 \begin{frame}
@@ -276,6 +280,9 @@ What about 1st party cookies?
 \item Connect them based on their interactions.
 \item Track identifiers through these interactions.
 \end{itemize}
+
+\pic{grapcon2}
+
 \end{frame}
 
 \begin{frame}
@@ -284,6 +291,14 @@ What about 1st party cookies?
 \item Extract two kinds of features: \textit{structural} and \textit{flow}.
 \item Structural - relationships between the nodes in the graph.
 \item Flow - behavior of cookies, like "number of times a cookie was infiltrated/exfiltrated."
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Classification}
+\begin{itemize}
+\item Filter lists
+\item Cookiepedia
 \end{itemize}
 \end{frame}
 
