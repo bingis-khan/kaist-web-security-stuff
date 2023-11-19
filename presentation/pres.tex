@@ -33,19 +33,40 @@ Understanding and Detecting First-Party Tracking Cookies}
 
 \section{What is this about?}
 
+
 \begin{frame}
+\frametitle{Problem}
 \begin{itemize}
 \item 3rd party cookies are increasingly being blocked in browsers
 \item Advertisers now use 1st party cookies to track users. 
-\item Blocking third party cookies barely makes a difference in the amount of tracking.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Contribution}
+
+\begin{itemize}
 \item CookieGraph - block the offending first party cookies in order to stop tracking.
+\item Measure how 3rd party cookies actually stop the tracking.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
+\frametitle{Result}
+
 \begin{itemize}
-\item Over 90\% of first party tracking cookies blocked - the best of any other solutions.
+\item Over 90\% of first party tracking cookies blocked by CookieGraph - the best of any other solutions.
 \item Large overhead - infeasible to run in an \textit{offline} mode on consumer hardware.
+\item Most tracking happens with first-party cookies anyway.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Meaning}
+\begin{itemize}
+\item Blocking third party cookies barely makes a difference in the amount of tracking.
+\item However, it's possible to detect and block first-party cookies. But, it requires a lot of computing power.
 \end{itemize}
 \end{frame}
 
@@ -56,7 +77,7 @@ Understanding and Detecting First-Party Tracking Cookies}
 \frametitle{3rd Party Cookie Blocking}
 
 \begin{itemize}
-\item Most browser adopting countermeasures against tracking through 3rd Party Cookies.
+\item Most browsers adopting countermeasures against tracking through 3rd Party Cookies.
 \item A new way of tracking is needed for advertisers.
 \end{itemize}
 
@@ -109,16 +130,51 @@ A need for a dedicated solution.
 What about 1st party cookies?
 \end{frame}
 
+
 \begin{frame}
 \frametitle{1st Party Cookies for tracking}
 
 \begin{itemize}
 \item Same-site tracking
 \item Cross-domain site tracking
-\item Third-party scripts set ID and share it with other trackers. They connect it with other site provided details like emails and info from other sites.
+\item Cross-site tracking
 \end{itemize}
-
 \end{frame}
+
+\begin{frame}
+\frametitle{Same-site tracking}
+\begin{itemize}
+\item Tracks the user across the same site.
+\item Ex. embed a third-party script in a website, which sets first-party cookies.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cross-domain same-site tracking}
+\begin{itemize}
+\item Tracks the user across multiple subdomains.
+\item Shares cookies with other subdomains.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Cross-domain tracking}
+\begin{itemize}
+\item Tracks the user across multiple sites.
+\item Not extensively studied in first-party context.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{1st vs 3rd party cookies}
+\begin{itemize}
+\item Cookies can be set either by \textit{Set-Cookie} response header or \textit{document.cookie}.
+\item When \textit{Set-Cookie} is used in a response from the \textit{same} domain as the site, it's a 1st party cookie.
+\item When \textit{document.cookie} not in third party context (not in iframe), it's a 1st party cookie.
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Countermeasures?}
@@ -161,10 +217,18 @@ What about 1st party cookies?
 \end{frame}
 
 \begin{frame}
+\frametitle{Impact of blocking 3rd party cookies}
+
+\begin{itemize}
+\item Blocking 3rd party cookies results in a negligible reduction of tracking requests.
+\item Sites do not rely on third party cookies to track users.
+\end{itemize}
+
 \begin{figure}
 \includegraphics[scale=0.5]{img/trackingwhen3rdpcblock}
 \end{figure}
 \end{frame}
+
 
 
 \section{Introducing CookieGraph}
@@ -194,12 +258,41 @@ What about 1st party cookies?
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Crawl as much info as possible about a webpage}
+\begin{itemize}
+\item HTML elements
+\item scripts
+\item network responses
+\item identifiers from network requests/responses
+\item operations on browser's storage
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Graph}
+\begin{itemize}
+\item Make a node for each type of element crawled.
+\item Connect them based on their interactions.
+\item Track identifiers through these interactions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Feature Extraction}
+\begin{itemize}
+\item Extract two kinds of features: \textit{structural} and \textit{flow}.
+\item Structural - relationships between the nodes in the graph.
+\item Flow - behavior of cookies, like "number of times a cookie was infiltrated/exfiltrated."
+\end{itemize}
+\end{frame}
+
+
 
 \section{Evaluation}
 
 \begin{frame}
 \frametitle{Feature Analysis}
-
 
 \begin{figure}
 \includegraphics[scale=0.3]{img/featureanalysis}
