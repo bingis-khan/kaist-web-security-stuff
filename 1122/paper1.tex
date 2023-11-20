@@ -1,0 +1,44 @@
+
+
+\documentclass{article}
+
+\title{"The Dangers of Human Touch:
+Fingerprinting Browser Extensions through User Actions" Summary}
+\author{Robert Krzysztof Robert Noparlik}
+
+
+\begin{document}
+\maketitle
+
+\section{Summary}
+
+This paper deals with the topic of how user's extensions can compromise the anonymity of said user. It works like this: extensions (can) modify the website's DOM and, in turn, these websites can detect these DOM changes and read the information contained within. For example, if a user is using a translator extension, the website is able to read the user's language. This could be used to create a unique user fingerprint by the malicious website. So, the goal of this paper is to trigger as much of the fingerprintable behavior as possible.  However, as the authors mention in this paper, prior research seemed to have missed the fact, that a great number of extensions only react to user input, thus could be missed by the automated tools those previous researchers might have used. The authors use both static analysis and dynamic "execution" of the extensions to detect if and measure how much extensions are fingerprintable. They were able to fingerprint 4971 unique extensions, of which 36\% were not detectable by modern techniques.
+
+Alongside to this, webpages are able to trigger user actions through Javascript. If an extension does not check for the origin of the action, it's possible that a malicious webpage can force an extension fingerprint from an extension. The authors of this paper claim that around 67\% of extensions are vulnerable to this type of exploit.
+
+\section{Pros}
+
+\begin{itemize}
+\item A novel way to detect possible fingerprintable behavior.
+\item A way to protect against a webpage simulating user actions is provided.
+\end{itemize}
+
+\section{Cons}
+
+\begin{itemize}
+\item The static analysis might be "tricked" by a heavily obfuscated Javascript.
+\item It is unclear how an extension developer should protect against fingerprinting by a website - removing all DOM modifications seems to defeat the purpose of a lot of extensions.
+\end{itemize}
+
+\section{Meaning}
+
+This paper's main contribution is creating a tool for detecting extensions' fingerprintable behavior, which accounts for the fact, that in some extensions triggering fingerprintable behavior requires user interaction. Also, most extensions (67\%) do not check if an event was triggered by the user or by a webpage, thus creating a possibility to force a fingerprint without any real user interaction (which can happen just after page load, without the user noticing). This fingerprinting possibility is important and dangerous, as it greatly compromises users' privacy. It's reach is also great, as a lot of extensions depend on modifying the DOM and it is unclear how an extension developer should protect against it short of removing all DOM interactions, which might defeat the purpose of the extension. There have been previous paper addressing the topic of extension fingerprinting, as the topic is becoming increasingly popular, but according to the authors, this is the first one, that tested extensions based on triggering user actions.
+
+\section{Discussion}
+
+\begin{itemize}
+	\item How should an extension developer, whose extension (by design) adds elements to a webpage, protect its users against this attack?
+\end{itemize}
+
+
+\end{document}
