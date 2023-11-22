@@ -10,6 +10,11 @@ rm docs/pdf/*/*.log
 rm docs/pdf/*/*.aux
 
 
+# Add assets
+mkdir -p docs/static
+mv static/palm.png docs/static/
+mv static/font.ttf docs/static/
+
 # Also presentation
 cd presentation
 make
