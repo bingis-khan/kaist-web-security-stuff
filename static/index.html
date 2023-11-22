@@ -1,11 +1,873 @@
 <!doctype html>
 <html>
+<head>
+  <style>
+    @font-face {
+      font-family: 'JUSTICE3Da';
+      src: url('/static/font.ttf');
+      font-weight: normal;
+      font-style: normal;
+  
+    }
+
+    .contents {
+      font-family: 'JUSTICE3Da';
+      font-size: 5em;
+      font-weight: bold;
+      text-align: center;
+      color: rgb(32, 232, 200);
+  
+      animation: cradling 10s ease-in-out alternate infinite;
+      animation-delay: -5s;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    ul > li:hover {
+      color: rgb(239, 15, 221);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    .cover {
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+      z-index: 30;
+    }
+
+    body {
+      height: 100%;
+      margin: 0;
+      --step: 1.5px;
+  
+      animation: color-change 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes color-change {
+      from { background: rgb(39,255,214); }
+      to { background: rgb(255,0,223); }
+    }
+
+    .cradler {
+      outline: 10px dashed blue;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      z-index: -20;
+  
+      animation: cradling 10s ease-in-out infinite alternate;
+      animation-delay: -1s;
+    }
+
+    @keyframes cradling {
+      from { transform: rotate(-5deg); }
+      to { transform: rotate(5deg); }
+    }
+
+    .tree {
+      position: fixed;
+      top: 50%;
+      transform: scaleX(-1);
+      animation: tree-animation 10s ease-in infinite;
+    }
+
+    @keyframes tree-animation {
+      from {
+        height: 0;
+        left: 50%;
+        top: 50%;
+    
+      }
+  
+      to {
+        height: 100%;
+        top: 0%;
+        left: 100%;
+      }
+    }
+
+    .tree-left {
+      position: fixed;
+      top: 50%;
+      animation: tree-animation-left 10s ease-in infinite;
+    }
+
+    @keyframes tree-animation-left{
+      from {
+        height: 0;
+        right: 50%;
+        top: 50%;
+    
+      }
+  
+      to {
+        height: 100%;
+        top: 0%;
+        right: 100%;
+      }
+    }
+
+    .title {
+      outline: dashed 1px green;
+      margin-top: 15vh;
+      display: flex;
+      justify-content: center;
+      height: 16em;
+    }
+
+    .title-wobbler {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      width: max-content;
+  
+      animation: wobble 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes wobble {
+      from { transform: rotate(-8deg); }
+      to { transform: rotate(8deg); }
+    }
+
+    .main-text {
+      color: rgb(39,253,245);
+      font-family: sans-serif;
+      font-size: 8em;
+      font-weight: bold;
+      text-transform: uppercase;
+      flex: 1;
+  
+      z-index: 10;
+  
+      text-align: right;
+  
+      letter-spacing: 0px;
+      line-height: 0.9;
+    
+      animation: title-animation 5s infinite cubic-bezier(0.04, 0.1, 0.95, 1);
+      animation-fill-mode: both;
+  
+    }
+
+    .vertical {
+      writing-mode: vertical-lr;
+      text-orientation: upright;
+      z-index: 10;
+      width: max-content;
+      height: max-content;
+      flex: 1;
+  
+      font-family: sans-serif;
+      font-size: 2.8em;
+      font-weight: bold;
+  
+      color: rgb(255, 0, 0);
+  
+  
+      animation: vertical-animation 5s infinite cubic-bezier(0.04, 0.1, 0.95, 1);
+      animation-fill-mode: both;
+      position: relative;
+    }
+
+    .main-text > span {
+      display: block;
+    }
+
+    @keyframes vertical-animation {
+      0%, 25% {
+        margin-left: 0;
+        margin-top: 0;
+        text-shadow:
+          /* shadows */
+          /* upper-left (-1, -1) */
+          calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+      
+          /* upper-right (1, -1) */
+          calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+      
+          /* lower-left (-1, 1) */
+          calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+      
+          /* lower-right (1, 1) */
+          calc((1) * var(--step)) calc((1) * var(--step)) #000;
+        z-index: 9;
+        color: rgb(248,2,2);
+      }
+  
+      30% {
+        margin-left: calc(10 * var(--step));
+        margin-top: calc(5 * var(--step));
+        color: rgb(249,195,171);
+        text-shadow: 
+          calc((-1.9) * var(--step)) calc((-1) * var(--step)) rgb(249,163,143),
+          calc((-3.7) * var(--step)) calc((-2) * var(--step)) rgb(249,131,115),
+          calc((-5.5) * var(--step)) calc((-3) * var(--step)) rgb(249,99,87),
+          calc((-7.4) * var(--step)) calc((-4) * var(--step)) rgb(248,66,58),
+          calc((-9.2) * var(--step)) calc((-5) * var(--step)) rgb(248,34,30),
+          calc((-11) * var(--step)) calc((-6) * var(--step)) rgb(248,2,2),
+    
+          /* shadows */
+          /* upper-left (-1, -1) */
+          calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((-2.9) * var(--step)) calc((-2) * var(--step)) #000,
+          calc((-4.7) * var(--step)) calc((-3) * var(--step)) #000,
+          calc((-6.5) * var(--step)) calc((-4) * var(--step)) #000,
+          calc((-8.4) * var(--step)) calc((-5) * var(--step)) #000,
+          calc((-10.2) * var(--step)) calc((-6) * var(--step)) #000,
+          calc((-12) * var(--step)) calc((-7) * var(--step)) #000,
+      
+          /* upper-right (1, -1) */
+          calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((-0.9) * var(--step)) calc((-2) * var(--step)) #000,
+          calc((-2.7) * var(--step)) calc((-3) * var(--step)) #000,
+          calc((-4.5) * var(--step)) calc((-4) * var(--step)) #000,
+          calc((-6.4) * var(--step)) calc((-5) * var(--step)) #000,
+          calc((-8.2) * var(--step)) calc((-6) * var(--step)) #000,
+          calc((-10) * var(--step)) calc((-7) * var(--step)) #000,
+      
+          /* lower-left (-1, 1) */
+          calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((-2.9) * var(--step)) calc((0) * var(--step)) #000,
+          calc((-4.7) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((-6.5) * var(--step)) calc((-2) * var(--step)) #000,
+          calc((-8.4) * var(--step)) calc((-3) * var(--step)) #000,
+          calc((-10.2) * var(--step)) calc((-4) * var(--step)) #000,
+          calc((-12) * var(--step)) calc((-5) * var(--step)) #000,
+      
+          /* lower-right (1, 1) */
+          calc((1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((-0.9) * var(--step)) calc((0) * var(--step)) #000,
+          calc((-2.7) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((-4.5) * var(--step)) calc((-2) * var(--step)) #000,
+          calc((-6.4) * var(--step)) calc((-3) * var(--step)) #000,
+          calc((-8.2) * var(--step)) calc((-4) * var(--step)) #000,
+          calc((-10) * var(--step)) calc((-5) * var(--step)) #000;
+        z-index: 9;
+      }
+  
+      35% {
+        margin-left: calc(10 * var(--step));
+        margin-right: calc(-10 * var(--step));
+        margin-top: calc(0 * var(--step));
+        color: rgb(249,195,171);
+        text-shadow: 
+          calc((-1.9) * var(--step)) calc((-0.20) * var(--step)) rgb(249,163,143),
+          calc((-3.7) * var(--step)) calc((-0.30) * var(--step)) rgb(249,131,115),
+          calc((-5.5) * var(--step)) calc((-0.46) * var(--step)) rgb(249,99,87),
+          calc((-7.4) * var(--step)) calc((-0.64) * var(--step)) rgb(248,66,58),
+          calc((-9.2) * var(--step)) calc((-0.82) * var(--step)) rgb(248,34,30),
+          calc((-11) * var(--step)) calc((-1) * var(--step)) rgb(248,2,2),
+      
+          /* shadows */
+          /* upper-left (-1, -1) */
+          calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((-2.9) * var(--step)) calc((-1.2) * var(--step)) #000,
+          calc((-4.7) * var(--step)) calc((-1.3) * var(--step)) #000,
+          calc((-6.5) * var(--step)) calc((-1.46) * var(--step)) #000,
+          calc((-8.4) * var(--step)) calc((-1.64) * var(--step)) #000,
+          calc((-10.2) * var(--step)) calc((-1.82) * var(--step)) #000,
+          calc((-12) * var(--step)) calc((-2) * var(--step)) #000,
+      
+          /* upper-right (1, -1) */
+          calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((-0.9) * var(--step)) calc((-1.2) * var(--step)) #000,
+          calc((-2.7) * var(--step)) calc((-1.3) * var(--step)) #000,
+          calc((-4.5) * var(--step)) calc((-1.46) * var(--step)) #000,
+          calc((-6.4) * var(--step)) calc((-1.64) * var(--step)) #000,
+          calc((-8.2) * var(--step)) calc((-1.82) * var(--step)) #000,
+          calc((-10) * var(--step)) calc((-2) * var(--step)) #000,
+      
+          /* lower-left (-1, 1) */
+          calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((-2.9) * var(--step)) calc((0.8) * var(--step)) #000,
+          calc((-4.7) * var(--step)) calc((0.7) * var(--step)) #000,
+          calc((-6.5) * var(--step)) calc((0.54) * var(--step)) #000,
+          calc((-8.4) * var(--step)) calc((0.36) * var(--step)) #000,
+          calc((-10.2) * var(--step)) calc((0.18) * var(--step)) #000,
+          calc((-12) * var(--step)) calc((0) * var(--step)) #000,
+      
+          /* lower-right (1, 1) */
+          calc((1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((-0.9) * var(--step)) calc((0.8) * var(--step)) #000,
+          calc((-2.7) * var(--step)) calc((0.7) * var(--step)) #000,
+          calc((-4.5) * var(--step)) calc((0.54) * var(--step)) #000,
+          calc((-6.4) * var(--step)) calc((0.36) * var(--step)) #000,
+          calc((-8.2) * var(--step)) calc((0.18) * var(--step)) #000,
+          calc((-10) * var(--step)) calc((0) * var(--step)) #000;
+        z-index: 9;
+      }
+  
+      40%, 70% {
+        margin-left: 0;
+        margin-top: 0;
+        text-shadow:
+          /* shadows */
+          /* upper-left (-1, -1) */
+          calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+      
+          /* upper-right (1, -1) */
+          calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+      
+          /* lower-left (-1, 1) */
+          calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+      
+          /* lower-right (1, 1) */
+          calc((1) * var(--step)) calc((1) * var(--step)) #000;
+        z-index: 9;
+        color: rgb(248,2,2);
+      }
+  
+      75% {
+        margin-left: calc(-10 * var(--step));
+        margin-top: calc(-10 * var(--step));
+        color: rgb(249,195,171);
+        text-shadow: 
+          calc((1.9) * var(--step)) calc((1.9) * var(--step)) rgb(249,163,143),
+          calc((3.7) * var(--step)) calc((3.7) * var(--step)) rgb(249,131,115),
+          calc((5.5) * var(--step)) calc((5.5) * var(--step)) rgb(249,99,87),
+          calc((7.4) * var(--step)) calc((7.4) * var(--step)) rgb(248,66,58),
+          calc((9.2) * var(--step)) calc((9.2) * var(--step)) rgb(248,34,30),
+          calc((11) * var(--step)) calc((11) * var(--step)) rgb(248,2,2),
+      
+          /* shadows */
+          /* upper-left (-1, -1) */
+          calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((0.9) * var(--step)) calc((0.9) * var(--step)) #000,
+          calc((2.7) * var(--step)) calc((2.7) * var(--step)) #000,
+          calc((4.5) * var(--step)) calc((4.5) * var(--step)) #000,
+          calc((6.4) * var(--step)) calc((6.4) * var(--step)) #000,
+          calc((8.2) * var(--step)) calc((8.2) * var(--step)) #000,
+          calc((11) * var(--step)) calc((11) * var(--step)) #000,
+      
+          /* upper-right (1, -1) */
+          calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((2.9) * var(--step)) calc((0.9) * var(--step)) #000,
+          calc((4.7) * var(--step)) calc((2.7) * var(--step)) #000,
+          calc((6.5) * var(--step)) calc((4.5) * var(--step)) #000,
+          calc((8.4) * var(--step)) calc((6.4) * var(--step)) #000,
+          calc((10.2) * var(--step)) calc((8.2) * var(--step)) #000,
+          calc((13) * var(--step)) calc((11) * var(--step)) #000,
+      
+          /* lower-left (-1, 1) */
+          calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((0.9) * var(--step)) calc((2.9) * var(--step)) #000,
+          calc((2.7) * var(--step)) calc((4.7) * var(--step)) #000,
+          calc((4.5) * var(--step)) calc((6.5) * var(--step)) #000,
+          calc((6.4) * var(--step)) calc((8.4) * var(--step)) #000,
+          calc((8.2) * var(--step)) calc((10.2) * var(--step)) #000,
+          calc((11) * var(--step)) calc((13) * var(--step)) #000,
+      
+          /* lower-right (1, 1) */
+          calc((1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((2.9) * var(--step)) calc((2.9) * var(--step)) #000,
+          calc((4.7) * var(--step)) calc((4.7) * var(--step)) #000,
+          calc((6.5) * var(--step)) calc((6.5) * var(--step)) #000,
+          calc((8.4) * var(--step)) calc((8.4) * var(--step)) #000,
+          calc((10.2) * var(--step)) calc((10.2) * var(--step)) #000,
+          calc((13) * var(--step)) calc((13) * var(--step)) #000;
+        z-index: 10;
+      }
+  
+      80% {
+        margin-left: calc(-10 * var(--step));
+        margin-top: calc(-5 * var(--step));
+        color: rgb(249,195,171);
+        text-shadow: 
+           calc((1.9) * var(--step)) calc((1) * var(--step)) rgb(249,163,143),
+          calc((3.7) * var(--step)) calc((2) * var(--step)) rgb(249,131,115),
+          calc((5.5) * var(--step)) calc((3) * var(--step)) rgb(249,99,87),
+          calc((7.4) * var(--step)) calc((4) * var(--step)) rgb(248,66,58),
+          calc((9.2) * var(--step)) calc((5) * var(--step)) rgb(248,34,30),
+          calc((11) * var(--step)) calc((6) * var(--step)) rgb(248,2,2),
+      
+          /* shadows */
+          /* upper-left (-1, -1) */
+          calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((0.9) * var(--step)) calc((0) * var(--step)) #000,
+          calc((2.7) * var(--step)) calc((1) * var(--step)) #000,
+          calc((4.5) * var(--step)) calc((2) * var(--step)) #000,
+          calc((6.4) * var(--step)) calc((3) * var(--step)) #000,
+          calc((8.2) * var(--step)) calc((4) * var(--step)) #000,
+          calc((11) * var(--step)) calc((5) * var(--step)) #000,
+      
+          /* upper-right (1, -1) */
+          calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+          calc((2.9) * var(--step)) calc((0) * var(--step)) #000,
+          calc((4.7) * var(--step)) calc((1) * var(--step)) #000,
+          calc((6.5) * var(--step)) calc((2) * var(--step)) #000,
+          calc((8.4) * var(--step)) calc((3) * var(--step)) #000,
+          calc((10.2) * var(--step)) calc((4) * var(--step)) #000,
+          calc((13) * var(--step)) calc((5) * var(--step)) #000,
+      
+          /* lower-left (-1, 1) */
+          calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((0.9) * var(--step)) calc((2) * var(--step)) #000,
+          calc((2.7) * var(--step)) calc((3) * var(--step)) #000,
+          calc((4.5) * var(--step)) calc((4) * var(--step)) #000,
+          calc((6.4) * var(--step)) calc((5) * var(--step)) #000,
+          calc((8.2) * var(--step)) calc((6) * var(--step)) #000,
+          calc((11) * var(--step)) calc((7) * var(--step)) #000,
+      
+          /* lower-right (1, 1) */
+          calc((1) * var(--step)) calc((1) * var(--step)) #000,
+          calc((2.9) * var(--step)) calc((2) * var(--step)) #000,
+          calc((4.7) * var(--step)) calc((3) * var(--step)) #000,
+          calc((6.5) * var(--step)) calc((4) * var(--step)) #000,
+          calc((8.4) * var(--step)) calc((5) * var(--step)) #000,
+          calc((10.2) * var(--step)) calc((6) * var(--step)) #000,
+          calc((13) * var(--step)) calc((7) * var(--step)) #000;
+        z-index: 10;
+      }
+  
+      85%, 100% {
+        margin-left: 0;
+        margin-top: 0;
+        text-shadow:
+          /* shadows */
+          /* upper-left (-1, -1) */
+          calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+      
+          /* upper-right (1, -1) */
+          calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+      
+          /* lower-left (-1, 1) */
+          calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+      
+          /* lower-right (1, 1) */
+          calc((1) * var(--step)) calc((1) * var(--step)) #000;;
+        z-index: 9;
+        color: rgb(248,2,2);
+      }
+    }
+
+    @keyframes title-animation {
+      0% {
+        margin-top: calc(16 * var(--step));
+        margin-right: calc(0 * var(--step));
+      text-shadow:
+        calc((1) * var(--step)) calc((-1) * var(--step)) rgb(57,231,243),
+        calc((2) * var(--step)) calc((-2) * var(--step)) rgb(75,209,242),
+        calc((3) * var(--step)) calc((-3) * var(--step)) rgb(92,188,240),
+        calc((4) * var(--step)) calc((-4) * var(--step)) rgb(110,166,239),
+        calc((5) * var(--step)) calc((-5) * var(--step)) rgb(128,144,237),
+        calc((6) * var(--step)) calc((-6) * var(--step)) rgb(146,122,236),
+        calc((7) * var(--step)) calc((-7) * var(--step)) rgb(164,100,234),
+        calc((8) * var(--step)) calc((-8) * var(--step)) rgb(182,78,233),
+        calc((9) * var(--step)) calc((-9) * var(--step)) rgb(199,57,231),
+        calc((10) * var(--step)) calc((-10) * var(--step)) rgb(217,35,230),
+        calc((11) * var(--step)) calc((-11) * var(--step)) rgb(235,13,228),
+    
+        /* lower-right part */
+        calc((13) * var(--step)) calc((-9) * var(--step)) #000,
+        calc((12) * var(--step)) calc((-8) * var(--step)) #000,
+        calc((11) * var(--step)) calc((-7) * var(--step)) #000,
+        calc((10) * var(--step)) calc((-6) * var(--step)) #000,
+        calc((9) * var(--step)) calc((-5) * var(--step)) #000,
+        calc((8) * var(--step)) calc((-4) * var(--step)) #000,
+        calc((7) * var(--step)) calc((-3) * var(--step)) #000,
+        calc((6) * var(--step)) calc((-2) * var(--step)) #000,
+        calc((5) * var(--step)) calc((-1) * var(--step)) #000,
+        calc((4) * var(--step)) calc((0) * var(--step)) #000,
+        calc((3) * var(--step)) calc((1) * var(--step)) #000,
+        calc((2) * var(--step)) calc((2) * var(--step)) #000,
+  
+    
+       /* The upper-right part */
+      calc((13) * var(--step)) calc((-13) * var(--step)) #000,
+        calc((12) * var(--step)) calc((-12) * var(--step)) #000,
+        calc((11) * var(--step)) calc((-11) * var(--step)) #000,
+        calc((10) * var(--step)) calc((-10) * var(--step)) #000,
+        calc((9) * var(--step)) calc((-9) * var(--step)) #000,
+        calc((8) * var(--step)) calc((-8) * var(--step)) #000,
+        calc((7) * var(--step)) calc((-7) * var(--step)) #000,
+        calc((6) * var(--step)) calc((-6) * var(--step)) #000,
+        calc((5) * var(--step)) calc((-5) * var(--step)) #000,
+        calc((4) * var(--step)) calc((-4) * var(--step)) #000,
+        calc((3) * var(--step)) calc((-3) * var(--step)) #000,
+        calc((2) * var(--step)) calc((-2) * var(--step)) #000,
+  
+        /* upper-left part */
+    	calc((9) * var(--step)) calc((-13) * var(--step)) #000,
+    	calc((8) * var(--step)) calc((-12) * var(--step)) #000,
+    	calc((7) * var(--step)) calc((-11) * var(--step)) #000,
+    	calc((6) * var(--step)) calc((-10) * var(--step)) #000,
+    	calc((5) * var(--step)) calc((-9) * var(--step)) #000,
+    	calc((4) * var(--step)) calc((-8) * var(--step)) #000,
+    	calc((3) * var(--step)) calc((-7) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((-6) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((-5) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((-4) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((-3) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((-2) * var(--step)) #000,
+
+	
+        /* lower-left part */
+        calc((9) * var(--step)) calc((-9) * var(--step)) #000,
+    	calc((8) * var(--step)) calc((-8) * var(--step)) #000,
+    	calc((7) * var(--step)) calc((-7) * var(--step)) #000,
+    	calc((6) * var(--step)) calc((-6) * var(--step)) #000,
+    	calc((5) * var(--step)) calc((-5) * var(--step)) #000,
+    	calc((4) * var(--step)) calc((-4) * var(--step)) #000,
+    	calc((3) * var(--step)) calc((-3) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((-2) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((0) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((2) * var(--step)) #000;
+
+      }
+  
+      25% {
+        margin-top: calc(16 * var(--step));
+        margin-right: calc(-22 * var(--step));
+      text-shadow:
+        calc((-1) * var(--step)) calc((-1) * var(--step)) rgb(57,231,243),
+        calc((-2) * var(--step)) calc((-2) * var(--step)) rgb(75,209,242),
+        calc((-3) * var(--step)) calc((-3) * var(--step)) rgb(92,188,240),
+        calc((-4) * var(--step)) calc((-4) * var(--step)) rgb(110,166,239),
+        calc((-5) * var(--step)) calc((-5) * var(--step)) rgb(128,144,237),
+        calc((-6) * var(--step)) calc((-6) * var(--step)) rgb(146,122,236),
+        calc((-7) * var(--step)) calc((-7) * var(--step)) rgb(164,100,234),
+        calc((-8) * var(--step)) calc((-8) * var(--step)) rgb(182,78,233),
+        calc((-9) * var(--step)) calc((-9) * var(--step)) rgb(199,57,231),
+        calc((-10) * var(--step)) calc((-10) * var(--step)) rgb(217,35,230),
+        calc((-11) * var(--step)) calc((-11) * var(--step)) rgb(235,13,228),
+    
+        /* lower-right part */
+        calc((-9) * var(--step)) calc((-9) * var(--step)) #000,
+    	calc((-8) * var(--step)) calc((-8) * var(--step)) #000,
+    	calc((-7) * var(--step)) calc((-7) * var(--step)) #000,
+    	calc((-6) * var(--step)) calc((-6) * var(--step)) #000,
+    	calc((-5) * var(--step)) calc((-5) * var(--step)) #000,
+    	calc((-4) * var(--step)) calc((-4) * var(--step)) #000,
+    	calc((-3) * var(--step)) calc((-3) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((-2) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((0) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((1) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((2) * var(--step)) #000,
+  
+    
+       /* The upper-right part */
+      calc((-9) * var(--step)) calc((-13) * var(--step)) #000,
+    	calc((-8) * var(--step)) calc((-12) * var(--step)) #000,
+    	calc((-7) * var(--step)) calc((-11) * var(--step)) #000,
+    	calc((-6) * var(--step)) calc((-10) * var(--step)) #000,
+    	calc((-5) * var(--step)) calc((-9) * var(--step)) #000,
+    	calc((-4) * var(--step)) calc((-8) * var(--step)) #000,
+    	calc((-3) * var(--step)) calc((-7) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((-6) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((-5) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((-4) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((-3) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((-2) * var(--step)) #000,
+
+  
+        /* upper-left part */
+    	calc((-13) * var(--step)) calc((-13) * var(--step)) #000,
+        calc((-12) * var(--step)) calc((-12) * var(--step)) #000,
+        calc((-11) * var(--step)) calc((-11) * var(--step)) #000,
+        calc((-10) * var(--step)) calc((-10) * var(--step)) #000,
+        calc((-9) * var(--step)) calc((-9) * var(--step)) #000,
+        calc((-8) * var(--step)) calc((-8) * var(--step)) #000,
+        calc((-7) * var(--step)) calc((-7) * var(--step)) #000,
+        calc((-6) * var(--step)) calc((-6) * var(--step)) #000,
+        calc((-5) * var(--step)) calc((-5) * var(--step)) #000,
+        calc((-4) * var(--step)) calc((-4) * var(--step)) #000,
+        calc((-3) * var(--step)) calc((-3) * var(--step)) #000,
+        calc((-2) * var(--step)) calc((-2) * var(--step)) #000,
+
+
+	
+        /* lower-left part */
+        calc((-13) * var(--step)) calc((-9) * var(--step)) #000,
+        calc((-12) * var(--step)) calc((-8) * var(--step)) #000,
+        calc((-11) * var(--step)) calc((-7) * var(--step)) #000,
+        calc((-10) * var(--step)) calc((-6) * var(--step)) #000,
+        calc((-9) * var(--step)) calc((-5) * var(--step)) #000,
+        calc((-8) * var(--step)) calc((-4) * var(--step)) #000,
+        calc((-7) * var(--step)) calc((-3) * var(--step)) #000,
+        calc((-6) * var(--step)) calc((-2) * var(--step)) #000,
+        calc((-5) * var(--step)) calc((-1) * var(--step)) #000,
+        calc((-4) * var(--step)) calc((0) * var(--step)) #000,
+        calc((-3) * var(--step)) calc((1) * var(--step)) #000,
+        calc((-2) * var(--step)) calc((2) * var(--step)) #000;
+      }
+  
+      50% {
+        margin-top: calc(-6 * var(--step));
+        margin-right: calc(-22 * var(--step));
+      text-shadow:
+        calc((-1) * var(--step)) calc((1) * var(--step)) rgb(57,231,243),
+        calc((-2) * var(--step)) calc((2) * var(--step)) rgb(75,209,242),
+        calc((-3) * var(--step)) calc((3) * var(--step)) rgb(92,188,240),
+        calc((-4) * var(--step)) calc((4) * var(--step)) rgb(110,166,239),
+        calc((-5) * var(--step)) calc((5) * var(--step)) rgb(128,144,237),
+        calc((-6) * var(--step)) calc((6) * var(--step)) rgb(146,122,236),
+        calc((-7) * var(--step)) calc((7) * var(--step)) rgb(164,100,234),
+        calc((-8) * var(--step)) calc((8) * var(--step)) rgb(182,78,233),
+        calc((-9) * var(--step)) calc((9) * var(--step)) rgb(199,57,231),
+        calc((-10) * var(--step)) calc((10) * var(--step)) rgb(217,35,230),
+        calc((-11) * var(--step)) calc((11) * var(--step)) rgb(235,13,228),
+    
+        /* lower-right part */
+        calc((-9) * var(--step)) calc((13) * var(--step)) #000,
+    	calc((-8) * var(--step)) calc((12) * var(--step)) #000,
+    	calc((-7) * var(--step)) calc((11) * var(--step)) #000,
+    	calc((-6) * var(--step)) calc((10) * var(--step)) #000,
+    	calc((-5) * var(--step)) calc((9) * var(--step)) #000,
+    	calc((-4) * var(--step)) calc((8) * var(--step)) #000,
+    	calc((-3) * var(--step)) calc((7) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((6) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((5) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((4) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((3) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((2) * var(--step)) #000,
+  
+    
+       /* The upper-right part */
+      calc((-9) * var(--step)) calc((9) * var(--step)) #000,
+    	calc((-8) * var(--step)) calc((8) * var(--step)) #000,
+    	calc((-7) * var(--step)) calc((7) * var(--step)) #000,
+    	calc((-6) * var(--step)) calc((6) * var(--step)) #000,
+    	calc((-5) * var(--step)) calc((5) * var(--step)) #000,
+    	calc((-4) * var(--step)) calc((4) * var(--step)) #000,
+    	calc((-3) * var(--step)) calc((3) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((2) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((0) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((-2) * var(--step)) #000,
+
+
+  
+        /* upper-left part */
+    	  calc((-13) * var(--step)) calc((9) * var(--step)) #000,
+        calc((-12) * var(--step)) calc((8) * var(--step)) #000,
+        calc((-11) * var(--step)) calc((7) * var(--step)) #000,
+        calc((-10) * var(--step)) calc((6) * var(--step)) #000,
+        calc((-9) * var(--step)) calc((5) * var(--step)) #000,
+        calc((-8) * var(--step)) calc((4) * var(--step)) #000,
+        calc((-7) * var(--step)) calc((3) * var(--step)) #000,
+        calc((-6) * var(--step)) calc((2) * var(--step)) #000,
+        calc((-5) * var(--step)) calc((1) * var(--step)) #000,
+        calc((-4) * var(--step)) calc((0) * var(--step)) #000,
+        calc((-3) * var(--step)) calc((-1) * var(--step)) #000,
+        calc((-2) * var(--step)) calc((-2) * var(--step)) #000,
+
+
+	
+        /* lower-left part */
+        calc((-13) * var(--step)) calc((13) * var(--step)) #000,
+        calc((-12) * var(--step)) calc((12) * var(--step)) #000,
+        calc((-11) * var(--step)) calc((11) * var(--step)) #000,
+        calc((-10) * var(--step)) calc((10) * var(--step)) #000,
+        calc((-9) * var(--step)) calc((9) * var(--step)) #000,
+        calc((-8) * var(--step)) calc((8) * var(--step)) #000,
+        calc((-7) * var(--step)) calc((7) * var(--step)) #000,
+        calc((-6) * var(--step)) calc((6) * var(--step)) #000,
+        calc((-5) * var(--step)) calc((5) * var(--step)) #000,
+        calc((-4) * var(--step)) calc((4) * var(--step)) #000,
+        calc((-3) * var(--step)) calc((3) * var(--step)) #000,
+        calc((-2) * var(--step)) calc((2) * var(--step)) #000;
+      }
+  
+       75% {
+         margin-top: calc(-6 * var(--step));
+        margin-right: calc(0 * var(--step));
+      text-shadow:
+        calc((1) * var(--step)) calc((1) * var(--step)) rgb(57,231,243),
+        calc((2) * var(--step)) calc((2) * var(--step)) rgb(75,209,242),
+        calc((3) * var(--step)) calc((3) * var(--step)) rgb(92,188,240),
+        calc((4) * var(--step)) calc((4) * var(--step)) rgb(110,166,239),
+        calc((5) * var(--step)) calc((5) * var(--step)) rgb(128,144,237),
+        calc((6) * var(--step)) calc((6) * var(--step)) rgb(146,122,236),
+        calc((7) * var(--step)) calc((7) * var(--step)) rgb(164,100,234),
+        calc((8) * var(--step)) calc((8) * var(--step)) rgb(182,78,233),
+        calc((9) * var(--step)) calc((9) * var(--step)) rgb(199,57,231),
+        calc((10) * var(--step)) calc((10) * var(--step)) rgb(217,35,230),
+        calc((11) * var(--step)) calc((11) * var(--step)) rgb(235,13,228),
+    
+        /* lower-right part */
+        calc((13) * var(--step)) calc((13) * var(--step)) #000,
+        calc((12) * var(--step)) calc((12) * var(--step)) #000,
+        calc((11) * var(--step)) calc((11) * var(--step)) #000,
+        calc((10) * var(--step)) calc((10) * var(--step)) #000,
+        calc((9) * var(--step)) calc((9) * var(--step)) #000,
+        calc((8) * var(--step)) calc((8) * var(--step)) #000,
+        calc((7) * var(--step)) calc((7) * var(--step)) #000,
+        calc((6) * var(--step)) calc((6) * var(--step)) #000,
+        calc((5) * var(--step)) calc((5) * var(--step)) #000,
+        calc((4) * var(--step)) calc((4) * var(--step)) #000,
+        calc((3) * var(--step)) calc((3) * var(--step)) #000,
+        calc((2) * var(--step)) calc((2) * var(--step)) #000,
+  
+    
+       /* The upper-right part */
+       calc((13) * var(--step)) calc((9) * var(--step)) #000,
+        calc((12) * var(--step)) calc((8) * var(--step)) #000,
+        calc((11) * var(--step)) calc((7) * var(--step)) #000,
+        calc((10) * var(--step)) calc((6) * var(--step)) #000,
+        calc((9) * var(--step)) calc((5) * var(--step)) #000,
+        calc((8) * var(--step)) calc((4) * var(--step)) #000,
+        calc((7) * var(--step)) calc((3) * var(--step)) #000,
+        calc((6) * var(--step)) calc((2) * var(--step)) #000,
+        calc((5) * var(--step)) calc((1) * var(--step)) #000,
+        calc((4) * var(--step)) calc((0) * var(--step)) #000,
+        calc((3) * var(--step)) calc((-1) * var(--step)) #000,
+        calc((2) * var(--step)) calc((-2) * var(--step)) #000,
+
+
+  
+        /* upper-left part */
+    	  calc((9) * var(--step)) calc((9) * var(--step)) #000,
+    	calc((8) * var(--step)) calc((8) * var(--step)) #000,
+    	calc((7) * var(--step)) calc((7) * var(--step)) #000,
+    	calc((6) * var(--step)) calc((6) * var(--step)) #000,
+    	calc((5) * var(--step)) calc((5) * var(--step)) #000,
+    	calc((4) * var(--step)) calc((4) * var(--step)) #000,
+    	calc((3) * var(--step)) calc((3) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((2) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((1) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((0) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((-1) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((-2) * var(--step)) #000,
+
+
+	
+        /* lower-left part */
+        calc((9) * var(--step)) calc((13) * var(--step)) #000,
+    	calc((8) * var(--step)) calc((12) * var(--step)) #000,
+    	calc((7) * var(--step)) calc((11) * var(--step)) #000,
+    	calc((6) * var(--step)) calc((10) * var(--step)) #000,
+    	calc((5) * var(--step)) calc((9) * var(--step)) #000,
+    	calc((4) * var(--step)) calc((8) * var(--step)) #000,
+    	calc((3) * var(--step)) calc((7) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((6) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((5) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((4) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((3) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((2) * var(--step)) #000;
+
+      }
+  
+      100% {
+        margin-top: calc(16 * var(--step));
+        margin-right: calc(0 * var(--step));
+      text-shadow:
+        calc((1) * var(--step)) calc((-1) * var(--step)) rgb(57,231,243),
+        calc((2) * var(--step)) calc((-2) * var(--step)) rgb(75,209,242),
+        calc((3) * var(--step)) calc((-3) * var(--step)) rgb(92,188,240),
+        calc((4) * var(--step)) calc((-4) * var(--step)) rgb(110,166,239),
+        calc((5) * var(--step)) calc((-5) * var(--step)) rgb(128,144,237),
+        calc((6) * var(--step)) calc((-6) * var(--step)) rgb(146,122,236),
+        calc((7) * var(--step)) calc((-7) * var(--step)) rgb(164,100,234),
+        calc((8) * var(--step)) calc((-8) * var(--step)) rgb(182,78,233),
+        calc((9) * var(--step)) calc((-9) * var(--step)) rgb(199,57,231),
+        calc((10) * var(--step)) calc((-10) * var(--step)) rgb(217,35,230),
+        calc((11) * var(--step)) calc((-11) * var(--step)) rgb(235,13,228),
+    
+        /* lower-right part */
+        calc((13) * var(--step)) calc((-9) * var(--step)) #000,
+        calc((12) * var(--step)) calc((-8) * var(--step)) #000,
+        calc((11) * var(--step)) calc((-7) * var(--step)) #000,
+        calc((10) * var(--step)) calc((-6) * var(--step)) #000,
+        calc((9) * var(--step)) calc((-5) * var(--step)) #000,
+        calc((8) * var(--step)) calc((-4) * var(--step)) #000,
+        calc((7) * var(--step)) calc((-3) * var(--step)) #000,
+        calc((6) * var(--step)) calc((-2) * var(--step)) #000,
+        calc((5) * var(--step)) calc((-1) * var(--step)) #000,
+        calc((4) * var(--step)) calc((0) * var(--step)) #000,
+        calc((3) * var(--step)) calc((1) * var(--step)) #000,
+        calc((2) * var(--step)) calc((2) * var(--step)) #000,
+  
+    
+       /* The upper-right part */
+      calc((13) * var(--step)) calc((-13) * var(--step)) #000,
+        calc((12) * var(--step)) calc((-12) * var(--step)) #000,
+        calc((11) * var(--step)) calc((-11) * var(--step)) #000,
+        calc((10) * var(--step)) calc((-10) * var(--step)) #000,
+        calc((9) * var(--step)) calc((-9) * var(--step)) #000,
+        calc((8) * var(--step)) calc((-8) * var(--step)) #000,
+        calc((7) * var(--step)) calc((-7) * var(--step)) #000,
+        calc((6) * var(--step)) calc((-6) * var(--step)) #000,
+        calc((5) * var(--step)) calc((-5) * var(--step)) #000,
+        calc((4) * var(--step)) calc((-4) * var(--step)) #000,
+        calc((3) * var(--step)) calc((-3) * var(--step)) #000,
+        calc((2) * var(--step)) calc((-2) * var(--step)) #000,
+  
+        /* upper-left part */
+    	calc((9) * var(--step)) calc((-13) * var(--step)) #000,
+    	calc((8) * var(--step)) calc((-12) * var(--step)) #000,
+    	calc((7) * var(--step)) calc((-11) * var(--step)) #000,
+    	calc((6) * var(--step)) calc((-10) * var(--step)) #000,
+    	calc((5) * var(--step)) calc((-9) * var(--step)) #000,
+    	calc((4) * var(--step)) calc((-8) * var(--step)) #000,
+    	calc((3) * var(--step)) calc((-7) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((-6) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((-5) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((-4) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((-3) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((-2) * var(--step)) #000,
+
+	
+        /* lower-left part */
+        calc((9) * var(--step)) calc((-9) * var(--step)) #000,
+    	calc((8) * var(--step)) calc((-8) * var(--step)) #000,
+    	calc((7) * var(--step)) calc((-7) * var(--step)) #000,
+    	calc((6) * var(--step)) calc((-6) * var(--step)) #000,
+    	calc((5) * var(--step)) calc((-5) * var(--step)) #000,
+    	calc((4) * var(--step)) calc((-4) * var(--step)) #000,
+    	calc((3) * var(--step)) calc((-3) * var(--step)) #000,
+    	calc((2) * var(--step)) calc((-2) * var(--step)) #000,
+    	calc((1) * var(--step)) calc((-1) * var(--step)) #000,
+    	calc((0) * var(--step)) calc((0) * var(--step)) #000,
+    	calc((-1) * var(--step)) calc((1) * var(--step)) #000,
+    	calc((-2) * var(--step)) calc((2) * var(--step)) #000;
+
+      }
+    }
+  </style>
+</head>
 <body>
-<p> new test </p>
-<!-- PDFPATHS -->
-<br>
-<div>
-  <a href="pdf/presentation.pdf">My shitty presentation</a>
+<div class="cover">
+  <div class="cradler">
+    <img class="tree" src="/static/palm.png" />
+    <img class="tree" src="/static/palm.png" style="animation-delay: -2s" />
+    <img class="tree" src="/static/palm.png" style="animation-delay: -4s" />
+    <img class="tree" src="/static/palm.png" style="animation-delay: -6s" />
+    <img class="tree" src="/static/palm.png" style="animation-delay: -8s" />
+
+    <img class="tree-left" src="/static/palm.png" />
+    <img class="tree-left" src="/static/palm.png" style="animation-delay: -2s" />
+    <img class="tree-left" src="/static/palm.png" style="animation-delay: -4s" />
+    <img class="tree-left" src="/static/palm.png" style="animation-delay: -6s" />
+    <img class="tree-left" src="/static/palm.png" style="animation-delay: -8s" />
+  </div>
+  
+  <div class="title">
+    <div class="title-wobbler">
+      <div class="main-text">ВЕБ-БЕЗОПАСНОСТЬ И<span>КОНФИДЕНЦИАЛЬНОСТЬ</span></div>
+      <div class="vertical">КАИСТ</div>
+    </div>
+  </div>
+  
+  <div class="contents">
+    <ul>
+      <!-- PDFPATHS -->
+    </ul>
+  </div>
 </div>
 </body>
 </html>
